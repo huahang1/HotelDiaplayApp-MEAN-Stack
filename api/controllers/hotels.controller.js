@@ -1,5 +1,5 @@
-var dbconn = require('../data/dbconnection');
-var ObjectId = require('mongodb').ObjectID;
+var mongoose = require('mongoose');
+var Hotel = mongoose.model('Hotel');
 
 module.exports.hotelsGetAll = function (req,res) {
     console.log('get the hotels');
@@ -8,8 +8,8 @@ module.exports.hotelsGetAll = function (req,res) {
     var offset = 0;
     var count = 5;
 
-    var db = dbconn.get();
-    var collection = db.collection('hotel');
+    // var db = dbconn.get();
+    // var collection = db.collection('hotel');
 
     if (req.query && req.query.offset){
         //here 10 means the number converted is based on decimal
@@ -20,43 +20,59 @@ module.exports.hotelsGetAll = function (req,res) {
         count = parseInt(req.query.count,10);
     }
 
-    collection
+    console.log('Hotel: ', Hotel);
+
+    Hotel
         .find()
         .skip(offset)
         .limit(count)
-        //without the toArray, it will cause the error called "converting circular structure to json"
-        .toArray(function (err,docs) {
-            console.log('find hotels: ', docs.length);
+        .exec(function (err,hotels) {
+            if (err){
+                console.log('err: ', err);
+                res.status(500);
+            }
+            console.log('hotels: ', hotels);
             res
                 .status(200)
-                .json(docs);
+                .json(hotels);
         });
 
-
-
+    // collection
+    //     .find()
+    //     .skip(offset)
+    //     .limit(count)
+    //     //without the toArray, it will cause the error called "converting circular structure to json"
+    //     .toArray(function (err,docs) {
+    //         console.log('find hotels: ', docs.length);
+    //         res
+    //             .status(200)
+    //             .json(docs);
+    //     });
 
 };
 
 module.exports.hotelsGetOne = function (req,res) {
-    var db = dbconn.get();
 
-    var collection = db.collection('hotel');
+    // var db = dbconn.get();
+    //
+    // var collection = db.collection('hotel');
 
     var hotelId = req.params.hotelId;
 
     console.log('get hotelId: ', hotelId);
 
-    collection
-        .findOne({_id:ObjectId(hotelId)},function (err,doc) {
+    Hotel
+        .findById(hotelId)
+        .exec(function (err,doc) {
             if (err){
-                console.log('error happens: ', err);
+                console.log('err: ', err);
                 res.status(500);
             }
-                console.log('doc: ', doc);
-                res
-                    .status(200)
-                    .json(doc);
-            });
+            console.log('doc: ', doc);
+            res
+                .status(200)
+                .json(doc);
+        });
 
 };
 
@@ -64,6 +80,7 @@ module.exports.hotelsAddOne = function (req,res) {
 
     var db = dbconn.get();
     var collection = db.collection('hotel');
+
     var newHotel;
 
     console.log('POST new hotel');
@@ -82,7 +99,7 @@ module.exports.hotelsAddOne = function (req,res) {
             res
                 .status(200)
                 .json(response.ops);
-        })
+        });
 
     }else{
         console.log('Data missing from the req.body');

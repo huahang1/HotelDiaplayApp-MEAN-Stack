@@ -22,6 +22,25 @@ module.exports.reviewsGetAll = function (req,res) {
         });
 };
 
+/*
+use mongo shell to set ObjectId for reviews, command db.hotel.update and put $set:{reviews.0._id:ObjectId()},
+this creates a reference for each review and the hotel; remember to add the {multi:true} to apply this change
+*/
+
+
 module.exports.reviewsGetOne = function (req,res) {
+    var hotelId = req.params.hotelId;
+    var reviewId = req.params.reviewId;
+    console.log('get reviewId: ', reviewId, " hotelId: ", hotelId);
     
-}
+    Hotel
+        .findById(hotelId)
+        .select('reviews')
+        .exec(function (err,hotel) {
+            console.log('returned hotel: ', hotel);
+            var review = hotel.reviews.id(reviewId);
+            res
+                .status(200)
+                .json(review);
+        });
+};

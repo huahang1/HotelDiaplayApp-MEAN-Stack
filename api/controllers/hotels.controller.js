@@ -1,12 +1,52 @@
 var mongoose = require('mongoose');
 var Hotel = mongoose.model('Hotel');
 
+var runGeoQuery = function (req,res) {
+
+    var lng = parseFloat(req.query.lng);
+    var lat = parseFloat(req.query.lat);
+
+    //remember to put the "Point" instead of "point", otherwise this point can not be recognized as GeoJson point
+    var point = {
+        type:"Point",
+        coordinates:[lng, lat]
+    };
+
+    console.log('point: ',point);
+
+    var geoOptions = {
+        spherical :true,
+        maxDistance:2000,
+        num:5
+    };
+
+    //the first parameter for the geoNeat at mongoose should be an array or GeoJson point object, if you just use the legacy array, the result is not accurate at all
+    Hotel
+        .geoNear(point, geoOptions,function (err,results,stats) {
+            if (err){
+                console.log('err: ', err);
+                res.status(500);
+            }
+            console.log('Geo results: ', results);
+            console.log('Geo stats: ', stats);
+            res
+                .status(200)
+                .json(results);
+        });
+};
+
 module.exports.hotelsGetAll = function (req,res) {
+
     console.log('get the hotels');
     console.log('req param: ', req.query);
 
     var offset = 0;
     var count = 5;
+
+    if(req.query && req.query.lng && req.query.lat){
+        runGeoQuery(req,res);
+        return;
+    }
 
     // var db = dbconn.get();
     // var collection = db.collection('hotel');

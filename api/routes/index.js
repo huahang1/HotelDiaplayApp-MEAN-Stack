@@ -22,7 +22,7 @@ router
     .get(ctrlReviews.reviewsGetAll);
 
 router
-    .route('/hotels/:hotelId/:reviewId')
+    .route('/hotels/:hotelId/reviews/:reviewId')
     .get(ctrlReviews.reviewsGetOne);
 
 module.exports = router;

@@ -1,0 +1,14 @@
+{
+  "name": "mean-stack-hero",
+  "description": "a web applicatiotn for displaying hotel information",
+  "main": "app.js",
+  "authors": [
+    "Chris Hua"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/huahang1/HotelDiaplayApp-MEAN-Stack",
+  "dependencies": {
+    "angular": "1.5.9",
+    "angular-route": "1.5.9"
+  }
+}

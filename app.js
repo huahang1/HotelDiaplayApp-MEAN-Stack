@@ -17,8 +17,10 @@ app.use(function (req,res,next) {
 //path is a node module which deals with the name of file path
 app.use(express.static(path.join(__dirname,'public')));
 
-//get the params from req.body through bodyParser
+//get the params from req.body through bodyParser, enable parsing of post forms
 app.use(bodyParser.urlencoded({extended:false}));
+//when you use angular for passing data to the backend, make sure to add this part to let the backend parse json data
+app.use(bodyParser.json());
 
 //configure to make each request url starts with '/api'
 app.use('/api',routes);

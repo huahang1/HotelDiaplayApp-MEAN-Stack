@@ -1,4 +1,7 @@
+//when use component instead of directive, the restrict is by element
 angular.module('meanhotel').component('hotelRating',{
+
+    // = means access stars parameter by value
     bindings:{
         stars:'='
     },

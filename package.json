@@ -10,9 +10,11 @@
   "author": "Chris Hua",
   "license": "ISC",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "geojson": "^0.4.1",
+    "jsonwebtoken": "^7.3.0",
     "mongodb": "^2.2.25",
     "mongoose": "^4.9.3"
   }

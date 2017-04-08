@@ -9,17 +9,26 @@
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
   <script src="jquery/jquery-2.1.4.min.js"></script>
+
   <script src="angular-app/app.js"></script>
   <script src="angular-app/hotel-data-factory/hotel-data-factory.js"></script>
   <script src="angular-app/hotel-display/hotel-display-controller.js"></script>
   <script src="angular-app/hotel-list/hotel-list-controller.js"></script>
   <script src="angular-app/hotel-rating/hotel-rating-directive.js"></script>
 
+  <script src="angular-app/auth/auth-factory.js"></script>
+  <script src="angular-app/auth/auth-interceptor.js"></script>
+  <script src="angular-app/login/login-controller.js"></script>
+  <script src="angular-app/navigation-directive/navigation-directive.js"></script>
+  <script src="angular-app/register/register-controller.js"></script>
+
 </head>
 <body>
 
-  <div ng-view></div>
-
+  <mh-navigation></mh-navigation>
+  <div class="container">
+    <div ng-view></div>
+  </div>
 
 </body>
 </html>

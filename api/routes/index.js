@@ -5,9 +5,10 @@ var ctrlHotels = require('../controllers/hotels.controller');
 var ctrlReviews = require('../controllers/reviews.controller');
 var ctrlUsers = require('../controllers/users.controller');
 
+//add authentication for each request
 router
     .route('/hotels')
-    .get(ctrlHotels.hotelsGetAll)
+    .get(ctrlUsers.authenticate,ctrlHotels.hotelsGetAll)
     .post(ctrlHotels.hotelsAddOne);
 
 router

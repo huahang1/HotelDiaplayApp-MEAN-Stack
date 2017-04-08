@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./api/routes');
 
+
 app.set('port',3000);
 
 //configure a middleware for logging each request method and request url

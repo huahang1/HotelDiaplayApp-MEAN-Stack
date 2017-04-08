@@ -4,6 +4,7 @@ var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
 
 module.exports.register = function(req,res){
+    
     console.log('register user');
     
     var username = req.body.username;

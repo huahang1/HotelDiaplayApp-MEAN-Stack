@@ -2,6 +2,7 @@ angular.module('meanhotel',['ngRoute','angular-jwt']).config(config).run(run);
 
 function config($httpProvider,$routeProvider) {
 
+    //add interceptor
     $httpProvider.interceptors.push('AuthInterceptor');
 
     $routeProvider
@@ -46,6 +47,7 @@ function config($httpProvider,$routeProvider) {
         });
 }
 
+//make the restricted part cannot be access directly
 function run($rootScope,$location,$window,AuthFactory) {
     $rootScope.$on('$routeChangeStart',function (event,nextRoute,currentRoute) {
         if (nextRoute.access !== undefined && nextRoute.access.restricted && !$window.sessionStorage.token && !AuthFactory.isLoggedIn){

@@ -8,7 +8,7 @@ var ctrlUsers = require('../controllers/users.controller');
 //add authentication for each request
 router
     .route('/hotels')
-    .get(ctrlUsers.authenticate,ctrlHotels.hotelsGetAll)
+    .get(ctrlHotels.hotelsGetAll)
     .post(ctrlHotels.hotelsAddOne);
 
 router
@@ -21,7 +21,8 @@ router
 router
     .route('/hotels/:hotelId/reviews')
     .get(ctrlReviews.reviewsGetAll)
-    .post(ctrlReviews.reviewsAddOne);
+    //prevent someone uses postman to send request to change review
+    .post(ctrlUsers.authenticate,ctrlReviews.reviewsAddOne);
 
 router
     .route('/hotels/:hotelId/reviews/:reviewId')
